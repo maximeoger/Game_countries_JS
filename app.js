@@ -13,17 +13,9 @@ function counterStart (value) {
 
     timer = setInterval (function (){
         timeLeft --;
-        counter_disp.innerHTML = timeLeft;
-        console.log(timeLeft);
-        if(timeLeft % 2 == 0){
-            console.log('tac');
-        }else{
-            console.log('tic');
-        }
+
         if (timeLeft == 0){
             clearInterval(timer);
-           
-            console.log('BOUM');
             gameOver();
         }  
     }, 1000);
