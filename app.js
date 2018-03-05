@@ -1,4 +1,5 @@
 var start_btn = document.querySelector('.start');
+var restart_btn = document.querySelector('.restart');
 var to_find = document.querySelector('.to_find');
 var start_window = document.querySelector('#game-start');
 var game_over_window = document.querySelector('#game-over');
@@ -33,6 +34,8 @@ function gameOver () {
     game_over_window.classList.toggle('is-open');
 }
 
-
-
 start_btn.addEventListener('click', gameLauncher);
+restart_btn.addEventListener('click', function(){
+    game_over_window.classList.remove('is-open');
+    counterStart(timeMax);
+});
