@@ -28,7 +28,7 @@
       <div class="time"><span>20</span>s</div>
     </header>
 
-    <h2>France</h2>
+    <h2 class="name_flag"></h2>
 
     <div class="flags">
       <div class="flag"><img src="" class="img"></div>
@@ -68,22 +68,32 @@
 
     start_btn.addEventListener('click', gameLauncher);
 
-    /// génération aléatoire de drapeau
+
+    /// génération aléatoire de drapeau + titre
 
 
     var button = document.querySelector('button');
     var el = document.querySelectorAll('.img');
+    var length_flags = 102;
 
     button.addEventListener('click', function() {
       for (var i = 0; i < 4; i++) {
-        var nb = Math.floor(Math.random() * flags.length);
+        var nb = Math.floor(Math.random() * length_flags);
 
         console.log(flags[nb].code);
         var drapeau = flags[nb].code.toLowerCase();
         el[i].setAttribute('src', 'flags/' + drapeau + '.svg');
-      }
+        var number = Math.floor(Math.random() * 4 + 1);
+        console.log(number);
 
+        if (number === 1 ) {
+          var name = document.querySelector('.name_flag');
+          name.innerHTML = flags[nb].name;
+        }
+
+      }
     });
+    var score = 
   </script>
   <!-- écrivez votre code dans ce fichier -->
   <script src="app.js"></script>
