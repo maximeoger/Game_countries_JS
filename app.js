@@ -4,6 +4,7 @@ var to_find = document.querySelector('.to_find');
 var start_window = document.querySelector('#game-start');
 var game_over_window = document.querySelector('#game-over');
 var counter_disp = document.querySelector('.time span');
+var lifePts = 3;
 
 /* temps d'un Round en secondes ( modifiable selon la difficultée ) */
 var timeMax = 20;
@@ -37,9 +38,17 @@ function gameOver () {
     game_over_window.classList.toggle('is-open');
 }
 
+function missed() {
+    lifePts--;
+    if(lifePts == 0){
+        gameOver();
+    }
+    timeMax - 4;
+}
 /* lance le jeu */
 start_btn.addEventListener('click', gameLauncher);
 restart_btn.addEventListener('click', function(){
     game_over_window.classList.remove('is-open');
     counterStart(timeMax);
 });
+
