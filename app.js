@@ -17,10 +17,8 @@ function generateFlags() {
     var random = Math.floor(Math.random() * active_flags.length);
     var number = active_flags[random];
     active_flags.splice(random, 1);
-
-    flags_code.push(flags[nb].code);
-    el[i].dataset.code = flags_code[i];
-    console.log(el[i].dataset.code);
+    flags_code.push(flags[nb].name);
+    el[i].dataset.name = flags_code[i];
     if (number === 1) {
       var name = document.querySelector('.name_flag');
       name.innerHTML = flags[nb].name;
@@ -43,13 +41,11 @@ function counterStart(value) {
     }
   }, 1000);
 }
-
 /* affiche la fenetre de jeu et démarre le compteur ( fonction précédente ) */
 function gameLauncher() {
   start_window.classList.toggle('is-open');
   counterStart(timeMax);
 }
-
 /* fonction qui lance la fenettre du game over (résultant de la fonction counterStart si timeMax arrive à zéro) */
 function gameOver() {
   game_over_window.classList.toggle('is-open');
@@ -71,8 +67,14 @@ restart_btn.addEventListener('click', function() {
 });
 
 for (var i = 0; i < el.length; i++) {
-  var lolFlag = document.querySelector('.flag img[data-code='+ 'boom' +']');
   el[i].addEventListener('click', function() {
-    console.log(flags_code[clicked_flag]);
-  })
+    console.log(this.dataset.name);
+    compareFlags(i);
+    if ( this.dataset.name ) {
+
+    }
+  });
+}
+function compareFlags (nb) {
+
 }
