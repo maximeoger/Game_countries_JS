@@ -4,77 +4,83 @@ var to_find = document.querySelector('.to_find');
 var start_window = document.querySelector('#game-start');
 var game_over_window = document.querySelector('#game-over');
 var counter_disp = document.querySelector('.time span');
-var lifePts = 3;
-var el = document.querySelectorAll('.img');
-var active_flags = [0, 1, 2, 3];
+// var active_flags = [0, 1, 2, 3];
 var flags_code = [];
+var timeMax = 20;
+var bonus = 4;
+var el = document.querySelectorAll('.flags .img');
+var yourname = document.querySelector('.name_flag');
+var life = document.querySelectorAll('.lives img');
 
+// init
 function generateFlags() {
-  for (var i = 0; i < 4; i++) {
-    var nb = Math.floor(Math.random() * flags.length);
-    var drapeau = flags[nb].code.toLowerCase();
-    el[i].setAttribute('src', 'flags/' + drapeau + '.svg');
-    var random = Math.floor(Math.random() * active_flags.length);
-    var number = active_flags[random];
-    active_flags.splice(random, 1);
+
+  flags_code = [];
+
+  for (let i = 0; i < el.length; i++) {
+    let nb = Math.floor(Math.random() * flags.length);
+    let random = Math.floor(Math.random() * el.length);
+
+    el[i].setAttribute('src', 'flags/' + flags[nb].code.toLowerCase() + '.svg');
+    Array.from(el).splice(random, 1);
     flags_code.push(flags[nb].name);
+
+    console.log(flags_code);
     el[i].dataset.name = flags_code[i];
-    if (number === 1) {
-      var name = document.querySelector('.name_flag');
-      name.innerHTML = flags[nb].name;
-    }
   }
+  yourname.innerHTML = flags_code[Math.floor(Math.random() * el.length)];
 }
+
+for (let i = 0; i < el.length; i++) {
+  el[i].addEventListener('click', function() {
+    //console.log(el[i].dataset.name);
+    if (el[i].dataset.name === yourname.innerHTML){
+      generateFlags();
+      timeMax+=3;
+      if (timeMax > 30) {
+        timeMax = 30;
+      }
+      counter_disp.innerHTML = timeMax;
+
+    } else {
+      el[i].classList.add('is-active');
+    }
+  });
+}
+
 start_btn.addEventListener('click', generateFlags());
 /* temps d'un Round en secondes ( modifiable selon la difficultée ) */
-var timeMax = 20;
-/* cette fonction gère le compteur, toutes les 1000 ms (1sec) il décrémente de 1 la valeur de timeMax */
-function counterStart(value) {
-  var timeLeft = value;
-  counter_disp.innerHTML = timeLeft;
-  timer = setInterval(function() {
-    timeLeft--;
-    counter_disp.innerHTML = timeLeft;
-    if (timeLeft == 0) {
-      clearInterval(timer);
-      gameOver();
-    }
-  }, 1000);
+
+
+function init(){
+  timeMax = 20;
+  counter_disp.innerHTML = timeMax;
+
+  var timer = setInterval(function() {
+   timeMax--;
+   counter_disp.innerHTML = timeMax;
+   if (timeMax < 1) {
+     clearInterval(timer);
+     gameOver();
+   }
+ }, 1000);
 }
+
 /* affiche la fenetre de jeu et démarre le compteur ( fonction précédente ) */
 function gameLauncher() {
   start_window.classList.toggle('is-open');
-  counterStart(timeMax);
+  init();
 }
 /* fonction qui lance la fenettre du game over (résultant de la fonction counterStart si timeMax arrive à zéro) */
 function gameOver() {
   game_over_window.classList.toggle('is-open');
-}
-
-function missed() {
-    lifePts--;
-    if(lifePts == 0){
-        gameOver();
-    }
-    timeMax - 4;
 }
 /* lance le jeu */
 start_btn.addEventListener('click', gameLauncher);
 
 restart_btn.addEventListener('click', function() {
   game_over_window.classList.remove('is-open');
-  counterStart(timeMax);
+  init();
+  lifePts = 3;
+  generateFlags();
 });
-
-for (var i = 0; i < el.length; i++) {
-  el[i].addEventListener('click', function() {
-    console.log(this.dataset.name);
-    compareFlags(i);
-    if ( this.dataset.name ) {
-
-    }
-  });
-}
-function compareFlags (nb) {
-
-}
